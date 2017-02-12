@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.js"></script>
+
+</head>
+<body>
+<div id="demo">
+
+</div>
+
+
+
+<script>
+    var obj = {
+        message:"hello world!",
+        id:"123",
+        abc:"1235"
+    };
+
+    var str = `<div>hello</div>`      //根节点只能有1个，<div>不能有兄弟节点
+    new Vue({
+        el:"#demo",
+        data:obj,
+        render(createElement){
+            return createElement(
+                    "ul",
+                    [
+                        createElement("li",1),
+                        createElement("li",1),
+                        createElement("li",1)
+                    ]
+            );
+        }
+    });
+
+</script>
+
+
+
+</body>
+</html>
