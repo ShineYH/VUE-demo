@@ -4,8 +4,50 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="../js/vue.js" charset="utf-8" type="text/javascript"></script>
+    <link href="../css/app.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+    <div class="page-top">
+        <div class="page-content">
+            <h2>任务计划列表</h2>
+        </div>
+    </div>
+    <div class="main">
+        <h3 class="big-title">添加任务：</h3>
+        <input type="text" class="task-input" placeholder="添加任务，按回车键即可添加任务" />
+        <ul class="task-count">
+            <li>1个任务未完成</li>
+            <li class="action">
+                <a href="#" class="active">所有任务</a>
+                <a href="#" >未完成的任务</a>
+                <a href="#" >完成的任务</a>
+            </li>
+        </ul>
+        <h3 class="big-title">任务列表：</h3>
+        <div class="tasks">
+            <span class="no-task-tip" style="display: none;">未添加任务</span>
+            <ul class="todo-list">
+                <li class="todo completed">
+                    <div class="view">
+                        <input checked type="checkbox" class="toggle" />
+                        <label>吃饭</label>
+                        <button class="destroy"></button>
+                    </div>
+                    <input class="edit" type="text" />
+                </li>
+                <li class="todo">
+                    <div class="view">
+                        <input type="checkbox" class="toggle" />
+                        <label>吃饭</label>
+                        <button class="destroy"></button>
+                    </div>
+                    <input class="edit" type="text" />
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
 
 </body>
 </html>
