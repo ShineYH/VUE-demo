@@ -17,7 +17,7 @@
         <input
                 type="text"
                 class="task-input"
-                v-on:keyup.enter="addTodo"
+                v-on:keyup.enter="addTodo(123,$event)"
                 v-model="todo"
                placeholder="添加任务，按回车键即可添加任务" />
         <ul class="task-count">
