@@ -17,10 +17,10 @@
         <input
                 type="text"
                 class="task-input"
-                v-on:keyup.enter="addTodo(123,$event)"
+                v-on:keyup.enter="addTodo()"
                 v-model="todo"
                placeholder="添加任务，按回车键即可添加任务" />
-        <ul class="task-count">
+        <ul class="task-count" v-show="list.length">
             <li>1个任务未完成</li>
             <li class="action">
                 <a href="#" class="active">所有任务</a>
@@ -30,17 +30,16 @@
         </ul>
         <h3 class="big-title">任务列表：</h3>
         <div class="tasks">
-            <span class="no-task-tip" style="display: none;">未添加任务</span>
+            <span class="no-task-tip" v-show="!list.length">未添加任何任务</span>       <!--v-show:后面接表达式，如果为true 则显示，否则 不显示-->
             <ul class="todo-list">
-                <li class="todo" v-for="item in list">
+                <li class="todo" :class="{completed:item.isChecked}" v-for="item in list">   <!--动态绑定class  class里面是个对象，对象值为true，则添加该class-->
                     <div class="view">
-                        <input type="checkbox" class="toggle" />
+                        <input type="checkbox" v-model="item.isChecked" class="toggle" />   <!--双向绑定isChecked的值  completed这个class也会对应改变 -->
                         <label>{{item.title}}</label>
-                        <button class="destroy"></button>
+                        <button class="destroy" @click="deleteTodo(item)"></button>     <!--@为简写 函数将当前点击的item传送过去-->
                     </div>
                     <input class="edit" type="text" />
                 </li>
-
             </ul>
         </div>
     </div>
