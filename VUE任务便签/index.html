@@ -21,7 +21,15 @@
                 v-model="todo"
                placeholder="添加任务，按回车键即可添加任务" />
         <ul class="task-count" v-show="list.length">
-            <li>1个任务未完成</li>
+            <li>{{
+                    noCheckeLength
+                }}
+                个任务未完成</li>
+                        <!--list.filter(function(item){
+                                    return !item.isChecked
+                                }).length
+                             {{}}里面添加表达式，使用filterf返回需要的数组  不要带分号。但此时，模板里面放入了处理逻辑，要尽量避免这样的情况-->
+                        <!--使用Vue计算属性：computed，  处理视图模板中的逻辑，模板中只要渲染数据即可-->
             <li class="action">
                 <a href="#" class="active">所有任务</a>
                 <a href="#" >未完成的任务</a>

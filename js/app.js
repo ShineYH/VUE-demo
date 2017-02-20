@@ -3,8 +3,8 @@
  */
 
 var list = [
-    {title:"吃饭", isChecked:false},   //状态为false 则为不选中
-    {title:"睡觉",isChecked:true}     //状态为true 则为选中
+    {title:"吃饭", isChecked:false},   //状态为false 则为不选中   任务未完成
+    {title:"睡觉",isChecked:true}     //状态为true 则为选中  任务完成
 ];
 
 new Vue({
@@ -14,6 +14,13 @@ new Vue({
         todo:"",
         edtorTodos:'',   //记录正在编辑的数据
         beforeTitle:''    //记录正在编辑的title
+    },
+    computed:{    //Vue计算属性  处理视图模板中的逻辑   当数据发生改变时，会触发这个计算属性
+        noCheckeLength:function(){
+            return this.list.filter(function(item){
+                return !item.isChecked
+            }).length
+        }
     },
     methods:{                     // ！！！！！Vue 逻辑代码里面，尽量不要再操作dom，要使用vue本身双向绑定的功能，dom的任何变化，都可以在数据里面绑定体现，直接取数据即可！！！！！
         addTodo:function(){       //如何既传参数，也将事件处理函数传过来  html页面 传一个$event对象
