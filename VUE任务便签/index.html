@@ -43,8 +43,9 @@
                            v-onfocus="item==edtorTodos"
                            @blur="edtorTodoed(item)"
                            @keyup.enter="edtorTodoed(item)"
-                           v-model="item.title" />     <!--自定义指令，v-onfocus：判断input是否在编辑状态 表达式为true时，则正在编辑。使用@，绑定失去焦点事件
-                                                            此时 v-model绑定了title，这边改变了 title也会改变 -->
+                           @keyup.esc="cancelTodo(item)"
+                           v-model="item.title" />     <!--自定义指令，v-onfocus：判断input是否在编辑状态 表达式为true时，则正在编辑。
+                                                            使用@，绑定失去焦点事件 此时 v-model绑定了title，这边改变了 title也会改变 -->
                 </li>
             </ul>
         </div>

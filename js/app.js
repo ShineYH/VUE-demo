@@ -12,7 +12,8 @@ new Vue({
     data:{
         list:list,
         todo:"",
-        edtorTodos:''   //记录正在编辑的数据
+        edtorTodos:'',   //记录正在编辑的数据
+        beforeTitle:''    //记录正在编辑的title
     },
     methods:{                     // ！！！！！Vue 逻辑代码里面，尽量不要再操作dom，要使用vue本身双向绑定的功能，dom的任何变化，都可以在数据里面绑定体现，直接取数据即可！！！！！
         addTodo:function(){       //如何既传参数，也将事件处理函数传过来  html页面 传一个$event对象
@@ -33,10 +34,18 @@ new Vue({
             var index = this.list.indexOf(todo);
             this.list.splice(index,1);
          },
-        edtorTodo(todo){
+        edtorTodo(todo){   //编辑任务
+            //编辑任务的时候，记录下该任务的title，如果取消编辑时，恢复原来的title
+            this.beforeTitle = todo.title;
             this.edtorTodos = todo;
         },
-        edtorTodoed(todo){
+        edtorTodoed(todo){  //编辑任务成功
+            this.edtorTodos = "";
+        },
+        cancelTodo(todo){  //取消编辑
+            todo.title = this.beforeTitle;  //将当前项的title变为原来的title
+            this.beforeTitle = '';
+            //让原先div显示
             this.edtorTodos = "";
         }
     },
