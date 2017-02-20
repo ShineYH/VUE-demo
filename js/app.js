@@ -3,15 +3,16 @@
  */
 
 var list = [
-    /*{title:"吃饭", isChecked:false},   //状态为false 则为不选中
-    {title:"睡觉",isChecked:true}     //状态为true 则为选中*/
+    {title:"吃饭", isChecked:false},   //状态为false 则为不选中
+    {title:"睡觉",isChecked:true}     //状态为true 则为选中
 ];
 
 new Vue({
     el:".main",
     data:{
         list:list,
-        todo:""
+        todo:"",
+        edtorTodos:''   //记录正在编辑的数据
     },
     methods:{                     // ！！！！！Vue 逻辑代码里面，尽量不要再操作dom，要使用vue本身双向绑定的功能，dom的任何变化，都可以在数据里面绑定体现，直接取数据即可！！！！！
         addTodo:function(){       //如何既传参数，也将事件处理函数传过来  html页面 传一个$event对象
@@ -31,6 +32,21 @@ new Vue({
          deleteTodo(todo){    //es6 可以这么写    删除任务，只要删除list列表里面的值就好了，不要操作dom！！
             var index = this.list.indexOf(todo);
             this.list.splice(index,1);
-         }
+         },
+        edtorTodo(todo){
+            this.edtorTodos = todo;
+        },
+        edtorTodoed(todo){
+            this.edtorTodos = "";
+        }
+    },
+    directives:{
+        "onfocus":{               //directives 自定义指令
+            update(el,binding){               //Vue 提供的钩子函数，当内容发生更新，则触发该函数
+                if(binding.value){        //如果表达式值为真
+                    el.focus();       //元素获取焦点
+                }
+            }
+        }
     }
 });

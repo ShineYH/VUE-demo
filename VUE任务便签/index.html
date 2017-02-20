@@ -32,13 +32,19 @@
         <div class="tasks">
             <span class="no-task-tip" v-show="!list.length">未添加任何任务</span>       <!--v-show:后面接表达式，如果为true 则显示，否则 不显示-->
             <ul class="todo-list">
-                <li class="todo" :class="{completed:item.isChecked}" v-for="item in list">   <!--动态绑定class  class里面是个对象，对象值为true，则添加该class-->
+                <li class="todo" :class="{completed:item.isChecked,editing:item==edtorTodos}" v-for="item in list">   <!--动态绑定class  class里面是个对象，对象值为true，则添加该class
+                                                                                                                          class会随着里面值变化，动态添加移除！！避免操作dom  -->
                     <div class="view">
                         <input type="checkbox" v-model="item.isChecked" class="toggle" />   <!--双向绑定isChecked的值  completed这个class也会对应改变 -->
-                        <label>{{item.title}}</label>
+                        <label @dblclick="edtorTodo(item)">{{item.title}}</label>
                         <button class="destroy" @click="deleteTodo(item)"></button>     <!--@为简写 函数将当前点击的item传送过去-->
                     </div>
-                    <input class="edit" type="text" />
+                    <input class="edit" type="text"
+                           v-onfocus="item==edtorTodos"
+                           @blur="edtorTodoed(item)"
+                           @keyup.enter="edtorTodoed(item)"
+                           v-model="item.title" />     <!--自定义指令，v-onfocus：判断input是否在编辑状态 表达式为true时，则正在编辑。使用@，绑定失去焦点事件
+                                                            此时 v-model绑定了title，这边改变了 title也会改变 -->
                 </li>
             </ul>
         </div>
