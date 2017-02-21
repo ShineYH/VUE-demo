@@ -2,10 +2,23 @@
  * Created by shine on 2017/2/14.
  */
 
-var list = [
+    /*使用 localStorage 存取对象*/
+
+    var store = {
+        save(key,value){       //存
+            localStorage.setItem(key,JSON.stringify(value));
+        },
+        fetch(key){
+           return JSON.parse(localStorage.getItem(key)) || [];
+        }
+    };
+
+/*var list = [
     {title:"吃饭", isChecked:false},   //状态为false 则为不选中   任务未完成
     {title:"睡觉",isChecked:true}     //状态为true 则为选中  任务完成
-];
+];*/
+//  此时的list 便要从localstorage里面取
+var list = store.fetch("vue-task");
 
 new Vue({
     el:".main",
@@ -20,6 +33,17 @@ new Vue({
             return this.list.filter(function(item){
                 return !item.isChecked
             }).length
+        }
+    },
+    watch:{             //监控属性
+        /*list: function () {       监控list是否发生变化，但是这种监控是浅监控，list里面属性变化，监控不到
+            //operate
+        }*/
+        list:{
+            handler:function (){       //list发生变化时的处理函数
+                store.save("vue-task",this.list);
+            },
+            deep:true               //深层监控
         }
     },
     methods:{                     // ！！！！！Vue 逻辑代码里面，尽量不要再操作dom，要使用vue本身双向绑定的功能，dom的任何变化，都可以在数据里面绑定体现，直接取数据即可！！！！！
