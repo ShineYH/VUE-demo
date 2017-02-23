@@ -50,7 +50,6 @@ var vue =  new Vue({
             }).length
         },
         filterData:function(){                    // 计算属性，筛选出list，代替list显示
-
             return filterMethod[this.visibility] ? filterMethod[this.visibility](list) : list;
         }
     },
