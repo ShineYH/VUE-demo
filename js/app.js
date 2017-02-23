@@ -19,26 +19,45 @@
 ];*/
 //  此时的list 便要从localstorage里面取
 var list = store.fetch("vue-task");
-
-new Vue({
+var filterMethod = {      //直接定义一个对象，不用写很多if~else，写在外面，只需要声明一次
+    all:function(list){
+        return list;
+    },
+    unfinished:function(list){
+        return list.filter(function(item){
+            return !item.isChecked;
+        });
+    },
+    finished:function(list){
+        return list.filter(function(item){
+            return item.isChecked;
+        });
+    }
+};
+var vue =  new Vue({
     el:".main",
     data:{
         list:list,
         todo:"",
         edtorTodos:'',   //记录正在编辑的数据
-        beforeTitle:''    //记录正在编辑的title
+        beforeTitle:'',    //记录正在编辑的title
+        visibility:'all'    //通过该属性值变化，对任务进行筛选显示
     },
     computed:{    //Vue计算属性  处理视图模板中的逻辑   当数据发生改变时，会触发这个计算属性
         noCheckeLength:function(){
             return this.list.filter(function(item){
                 return !item.isChecked
             }).length
+        },
+        filterData:function(){                    // 计算属性，筛选出list，代替list显示
+
+            return filterMethod[this.visibility] ? filterMethod[this.visibility](list) : list;
         }
     },
     watch:{             //监控属性
         /*list: function () {       监控list是否发生变化，但是这种监控是浅监控，list里面属性变化，监控不到
-            //operate
-        }*/
+            //operate               watch可监控某个值发生变化，从而进行某些操作，computed也可监控，但是有返回值，偏向与计算
+        }*/                        // 当某些数据需要根据其他数据变化时，可以使用watch
         list:{
             handler:function (){       //list发生变化时的处理函数
                 store.save("vue-task",this.list);
@@ -90,3 +109,11 @@ new Vue({
         }
     }
 });
+
+function watchHashChange(){
+    var hash = window.location.hash.slice(1);
+    vue.visibility = hash;
+}
+watchHashChange();
+//监控浏览器hash值的变化
+window.addEventListener('hashchange',watchHashChange);
