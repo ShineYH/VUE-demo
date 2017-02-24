@@ -41,7 +41,7 @@
             <span class="no-task-tip" v-show="!list.length">未添加任何任务</span>       <!--v-show:后面接表达式，如果为true 则显示，否则 不显示-->
             <ul class="todo-list">
                 <li class="todo" :class="{completed:item.isChecked,editing:item==edtorTodos}" v-for="item in filterData">   <!--动态绑定class  class里面是个对象，对象值为true，则添加该class
-                                                                                                 class会随着里面值变化，动态添加移除！！避免操作dom  -->  <!--筛选显示 代替list-->
+                                                                  class会随着里面值变化，动态添加移除！！避免操作dom  -->  <!--筛选显示  filterData为计算返回的值 代替原先的list-->
                     <div class="view">
                         <input type="checkbox" v-model="item.isChecked" class="toggle" />   <!--双向绑定isChecked的值  completed这个class也会对应改变 -->
                         <label @dblclick="edtorTodo(item)">{{item.title}}</label>
