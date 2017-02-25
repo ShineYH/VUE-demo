@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>select组件封装</title>
+    <script src="../js/vue.js"></script>
+    <script src="select.js"></script>
+    <link href="select.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<section class="warp">
+    <div class="searchIpt clearFix">
+        <div class="clearFix">
+            <input type="text" class="keyWord" value="" />
+            <input type="button" value="GO">
+            <span></span>
+        </div>
+        <ul class="list">
+            <li>html+css</li>
+            <li>html5+css3</li>
+            <li>javascript</li>
+            <li>angular</li>
+            <li>react</li>
+            <li>vue</li>
+            <li>jquery</li>
+            <li>nodejs</li>
+        </ul>
+    </div>
+</section>
+
+<script>
+    var keyWord = document.querySelector('.keyWord');
+    var list = document.querySelector('.list');
+    var lis = list.querySelectorAll('li');
+
+    keyWord.onfocus = function() {
+        list.style.display = 'block';
+    };
+
+    keyWord.onblur = function() {
+        setTimeout(function() {
+            list.style.display = 'none';
+        }, 80);
+    };
+
+    for (var i=0; i<lis.length; i++) {
+        lis[i].onclick = function() {
+            for (var i=0; i<lis.length; i++) {
+                lis[i].className = '';
+            }
+            this.className = 'active';
+            keyWord.value = this.innerHTML;
+        }
+    }
+</script>
+</body>
+</html>
