@@ -9,20 +9,33 @@
 <body>
     <div id="app">
         <h2>自定义下拉框</h2>
-        <custom-select></custom-select>                <!--需要注册组件-->
+        <custom-select btn-value="查询"></custom-select>                <!--需要注册组件，标签名一定是烤串的方式-->  <!--自定义绑定数据-->
 
         <h2>自定义下拉框</h2>
-        <custom-select></custom-select>                <!--需要注册组件-->
+        <custom-select btn-value="搜索"></custom-select>                <!--需要注册组件，标签名一定是烤串的方式-->   <!--自定义绑定数据-->
     </div>
 
 <script>
-   //注册组件
-   Vue.component("custom-select",{
+   //注册组件  全局注册
+   /*
+   * 组件内通信：
+   * 父组件->子组件：
+   *    各个组件实例的作用域是孤立的，不能再子组件之间使用父组件的数据，比如定义个全局变量，然后子组件直接去使用，这样破坏了组件的孤立性
+   *    可以在组件上使用自定义属性绑定数据，在组件中需要显式的用props声明自定义属性名
+   *
+   *子组件->父组件：
+   *    需要用到自定义事件，父组件用$on监听自定义事件，$emit触发父组件所关心的自定义事件
+   *
+   * */
+
+
+   Vue.component("custom-select",{             //组件注册的时候可以使用驼峰或者烤串的命名方式，但是组件使用时一定要使用烤串的方式
+       props:["btnValue"],                     //props声明自定义属性时，一定使用驼峰的方式   使用v-bind:动态绑定该属性值
        template:`<section class="warp">
                     <div class="searchIpt clearFix">
                         <div class="clearFix">
                             <input type="text" class="keyWord" value="" />
-                            <input type="button" value="GO">
+                            <input type="button" :value="btnValue">
                             <span></span>
                         </div>
                         <ul class="list">
@@ -41,6 +54,7 @@
 
     new  Vue({
         el:"#app"
+        //components:{}  局部注册，只能在#app里面使用
     });
 
 </script>
