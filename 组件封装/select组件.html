@@ -9,10 +9,10 @@
 <body>
     <div id="app">
         <h2>自定义下拉框</h2>
-        <custom-select btn-value="查询"></custom-select>                <!--需要注册组件，标签名一定是烤串的方式-->  <!--自定义绑定数据-->
-
+        <custom-select btn-value="查询" v-bind:list="list1"></custom-select>                <!--需要注册组件，标签名一定是烤串的方式-->  <!--自定义绑定数据-->
+                                                                                    <!--将定义的数据 使用自定义属性传输-->
         <h2>自定义下拉框</h2>
-        <custom-select btn-value="搜索"></custom-select>                <!--需要注册组件，标签名一定是烤串的方式-->   <!--自定义绑定数据-->
+        <custom-select btn-value="搜索" v-bind:list="list2"></custom-select>                <!--需要注册组件，标签名一定是烤串的方式-->   <!--自定义绑定数据-->
     </div>
 
 <script>
@@ -24,36 +24,57 @@
    *    可以在组件上使用自定义属性绑定数据，在组件中需要显式的用props声明自定义属性名
    *
    *子组件->父组件：
-   *    需要用到自定义事件，父组件用$on监听自定义事件，$emit触发父组件所关心的自定义事件
+   *    需要用到自定义事件，父组件用v-on监听自定义事件，$emit触发父组件所关心的自定义事件
    *
    * */
 
 
-   Vue.component("custom-select",{             //组件注册的时候可以使用驼峰或者烤串的命名方式，但是组件使用时一定要使用烤串的方式
-       props:["btnValue"],                     //props声明自定义属性时，一定使用驼峰的方式   使用v-bind:动态绑定该属性值
+   Vue.component("custom-select",{             //组件注册的时候可以使用驼峰或者烤串的命名方式，但是组件使用时一定要使用烤串的方式   (公共组件)
+       data:function(){                     //组件内定义的data，要是个函数返回值，return一个对象，每个组件都return自己一个对象
+           return {
+               selectShow:false,            //下拉框显示、隐藏属性
+               val:""                        //绑定文本框里面的值   子组件改变这个值
+           }
+       },
+       props:["btnValue",'list'],                     //props声明自定义属性时，一定使用驼峰的方式   使用v-bind:动态绑定该属性值
        template:`<section class="warp">
                     <div class="searchIpt clearFix">
                         <div class="clearFix">
-                            <input type="text" class="keyWord" value="" />
+                            <input type="text" class="keyWord" @click="selectShow = !selectShow" :value="val" />
                             <input type="button" :value="btnValue">
                             <span></span>
                         </div>
-                        <ul class="list">
-                            <li>html+css</li>
-                            <li>html5+css3</li>
-                            <li>javascript</li>
-                            <li>angular</li>
-                            <li>react</li>
-                            <li>vue</li>
-                            <li>jquery</li>
-                            <li>nodejs</li>
-                        </ul>
+                        <custom-list v-show="selectShow" :list="list" @recceive="changeValue"></custom-list>
                     </div>
-                </section>`
+                </section>`,                                         //@recceive  父组件自定义的一个事件，用于被子组件触发
+       methods:{
+           changeValue(value){
+                this.val = value;
+           }
+       }
+
+   });
+
+   Vue.component('custom-list',{                     //将ul单独拿出来，作为一个组件    父子组件 父组件->子组件
+       props:["list"],                               //父组件标签内自定义的属性  传值
+       template:`<ul class="list">
+                    <li v-for="item in list" @click="selectValueHandle(item)">{{item}}</li>
+                 </ul>`,
+       methods:{                                   //组件里面 定义公共函数
+           selectValueHandle(item){
+               //此时我们在子组件里面点击了值，要将值放入父组件里面
+                //告诉父级 val的值改变了  需要触发父组件里面的自定义事件     类似jquery的 trigger
+                this.$emit('recceive',item);
+           }
+       }
    });
 
     new  Vue({
-        el:"#app"
+        el:"#app",
+        data:{                                            //自定义下拉框的数据
+            list1:['北京','上海','杭州'],
+            list2:['2017-02-03','2017-02-04','2017-02-05']
+        }
         //components:{}  局部注册，只能在#app里面使用
     });
 
