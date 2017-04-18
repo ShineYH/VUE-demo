@@ -43,7 +43,10 @@ var vue =  new Vue({
         beforeTitle:'',    //记录正在编辑的title
         visibility:'all'    //通过该属性值变化，对任务进行筛选显示
     },
-    computed:{    //Vue计算属性  处理视图模板中的逻辑   当数据发生改变时，会触发这个计算属性
+    //Vue计算属性  处理视图模板中的逻辑   当数据发生改变时，会触发这个计算属性，返回值的改变决定于它依赖的值，只有当依赖的值改变了，返回值才会变；
+    //计算返回值存储与缓存之中，适用于计算量比较大的情况，因为只要依赖值不变，则不会再去重新计算返回值，而是直接从缓存中取值
+    // 若不想使用缓存，则可以使用method  ｛｛method（）｝｝   使用函数的返回值
+    computed:{    
         noCheckeLength:function(){
             return this.list.filter(function(item){
                 return !item.isChecked
