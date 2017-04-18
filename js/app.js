@@ -58,8 +58,8 @@ var vue =  new Vue({
     },
     watch:{             //监控属性
         /*list: function () {       监控list是否发生变化，但是这种监控是浅监控，list里面属性变化，监控不到
-            //operate               watch可监控某个值发生变化，从而进行某些操作，computed也可监控，但是有返回值，偏向与计算，计算后返回计算值
-        }*/                        // 当某些数据需要根据其他数据变化时，可以使用watch
+            //operate               watch可监控某个值发生变化，从而进行某些操作，computed也可监控，偏向与依赖监控
+        }*/                        //当想要在数据（data）变化响应时，执行异步操作或开销较大的操作，可以使用watch
         list:{
             handler:function (){       //list发生变化时的处理函数
                 store.save("vue-task",this.list);
