@@ -31,9 +31,9 @@
                              {{}}里面添加表达式，使用filterf返回需要的数组  不要带分号。但此时，模板里面放入了处理逻辑，要尽量避免这样的情况-->
                         <!--使用Vue计算属性：computed，  处理视图模板中的逻辑，模板中只要渲染数据即可-->
             <li class="action">
-                <a href="#all" class="active">所有任务</a>
-                <a href="#unfinished" >未完成的任务</a>
-                <a href="#finished" >完成的任务</a>
+                <a href="#all" :class="{active:visibility === 'all'}">所有任务</a>
+                <a href="#unfinished" :class="{active:visibility === 'unfinished'}">未完成的任务</a>
+                <a href="#finished" :class="{active:visibility === 'finished'}">完成的任务</a>
             </li>
         </ul>
         <h3 class="big-title">任务列表：</h3>
