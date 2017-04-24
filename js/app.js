@@ -43,7 +43,10 @@ var vue =  new Vue({
         beforeTitle:'',    //记录正在编辑的title
         visibility:'all'    //通过该属性值变化，对任务进行筛选显示
     },
-    computed:{    //Vue计算属性  处理视图模板中的逻辑   当数据发生改变时，会触发这个计算属性
+    //Vue计算属性  处理视图模板中的逻辑   当数据发生改变时，会触发这个计算属性，返回值的改变决定于它依赖的值，只有当依赖的值改变了，返回值才会变；
+    //计算返回值存储与缓存之中，适用于计算量比较大的情况，因为只要依赖值不变，则不会再去重新计算返回值，而是直接从缓存中取值
+    // 若不想使用缓存，则可以使用method  ｛｛method（）｝｝   使用函数的返回值
+    computed:{    
         noCheckeLength:function(){
             return this.list.filter(function(item){
                 return !item.isChecked
@@ -55,8 +58,8 @@ var vue =  new Vue({
     },
     watch:{             //监控属性
         /*list: function () {       监控list是否发生变化，但是这种监控是浅监控，list里面属性变化，监控不到
-            //operate               watch可监控某个值发生变化，从而进行某些操作，computed也可监控，但是有返回值，偏向与计算，计算后返回计算值
-        }*/                        // 当某些数据需要根据其他数据变化时，可以使用watch
+            //operate               watch可监控某个值发生变化，从而进行某些操作，computed也可监控，偏向与依赖监控
+        }*/                        //当想要在数据（data）变化响应时，执行异步操作或开销较大的操作，可以使用watch
         list:{
             handler:function (){       //list发生变化时的处理函数
                 store.save("vue-task",this.list);
