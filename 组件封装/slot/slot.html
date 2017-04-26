@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="demo">
+    <h2>component</h2>
+    <custom>
+        <div>父节点内容</div>    <!--当写在自定义标签内的内容，主要用来混个子组件中的模板-->
+
+    </custom>
+
+</div>
+<script>
+    // 使用一种方式，混合父组件的内容与子组件自己的模板——内容分发，在子组件中，使用<slot>元素作为内容的插槽
+
+    Vue.component('custom',{
+        template:`
+            <div>
+               <!-- <slot>默认结构（如果父组件没有内容，则显示默认结构）</slot>
+               使用slot包裹内容，则父组件里面的内容会代替子组件里面slot包裹的内容
+               -->
+                <slot>
+                <p>first</p>
+                <p>second</p>
+                <p>third</p>
+                </slot>
+            </div>
+        `
+    });
+
+    let vm = new Vue({
+        el:"#demo",
+
+
+    });
+</script>
+
+</body>
+</html>
