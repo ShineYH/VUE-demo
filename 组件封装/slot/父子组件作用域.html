@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="demo">
+    <h2>component</h2>
+    <custom>
+        <!--渲染的数据都是父组件的数据-->
+       {{message}}
+    </custom>
+
+</div>
+<script>
+    Vue.component('custom',{
+        data(){
+          return   {
+              message:"子组件message"
+          }
+        },
+        template:`
+            <div>
+                {{message}}
+                <slot>first</slot>
+            </div>
+        `
+    });
+
+    let vm = new Vue({
+        el:"#demo",
+        data:{
+            message:"父组件message"
+        }
+
+    });
+</script>
+
+</body>
+</html>
