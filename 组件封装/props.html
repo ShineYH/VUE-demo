@@ -35,6 +35,30 @@
                 }
             }
         },
+	    /*
+	    	每次父组件更新时，子组件的所有 prop 都会更新为最新值。这意味着你不应该在子组件内部改变 prop 。如果你这么做了，Vue 会在控制台给出警告。
+		为什么我们会有修改prop中数据的冲动呢？通常是这两种原因：
+		1.prop 作为初始值传入后，子组件想把它当作局部数据来用；
+		2.prop 作为初始值传入，由子组件处理成其它数据输出。
+		对这两种原因，正确的应对方式是：
+		
+		1.定义一个局部变量，并用 prop 的值初始化它：
+		props: ['initialCounter'],
+		data: function () {
+		  return { counter: this.initialCounter }
+		}
+		
+		2.定义一个计算属性，处理 prop 的值并返回。
+		props: ['size'],
+		computed: {
+		  normalizedSize: function () {
+		    return this.size.trim().toLowerCase()
+		  }
+		}
+	    
+	    
+	    
+	    */
         data(){
             return {
                 incrementCount:this.count  //作为局部这个组件的data的初始值
@@ -46,12 +70,12 @@
             }
         },
         template:`
-					<div>
-						<h2>我是一个自定义的组件</h2>
-						<input type="button" value="改变count的值" @click="changeCount" />
-						{{incrementCount2}}
-					</div>
-				`,
+		<div>
+			<h2>我是一个自定义的组件</h2>
+			<input type="button" value="改变count的值" @click="changeCount" />
+			{{incrementCount2}}
+		</div>
+		`,
         methods:{
             changeCount(){
                 this.incrementCount++;
