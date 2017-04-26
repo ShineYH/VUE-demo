@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+<div id="demo">
+    <h2>component</h2>
+    <custom>
+        <div slot="first">1</div>
+        <div slot="third">3</div>
+
+        <template slot="second">      <!--批量添加-->
+            <div >2</div>
+            <span>22</span>
+
+        </template>
+        <div>替换未命名的slot</div>
+    </custom>
+
+</div>
+<script>
+
+    Vue.component('custom',{
+        template:`
+            <div>
+                   <slot name="first"> <p>first</p></slot>
+                   <slot name="second"> <p>second</p></slot>
+                   <slot name="third"> <p>third</p> </slot>
+                   <slot></slot>
+            </div>
+        `
+    });
+
+    let vm = new Vue({
+        el:"#demo",
+
+
+    });
+</script>
+
+</body>
+</html>
